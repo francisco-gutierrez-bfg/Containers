@@ -1,1 +1,1 @@
-# bf-tomcat-base
+# tomcat-base
