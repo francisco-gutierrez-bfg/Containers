@@ -1,0 +1,71 @@
+*****************************************
+*****************************************
+* Instructions to work with containers: *
+*****************************************
+*****************************************
+
+To deploy the container into docker:
+====================================
+docker build -t <image_name> <dockerfile location>
+
+Build and tag the image from dockerfile located in above folder.
+================================================================
+docker build -t gcr.io/${PROJECT_ID}/stubsrv:v1 <dockerfile location>
+
+To check image recently created:
+================================
+docker images
+
+To run a container from the new image:
+======================================
+Run the container persistent, (This option runs the container and make sure to start it if the server is rebooted, the container 
+will start automatically)
+
+docker run -dit --restart unless-stopped --name <container-name> -p <desired external port>:<container port> <image name>
+
+Run the container once (This option runs the container but once the server is rebooted, the container 
+won't start automatically)
+
+docker run -dit --name <container-name> -p <desired external port>:<container port> <image name>
+
+To change a restart policy in a container:
+==========================================
+This command changes the restart policy for an already running container named redis.
+docker update --restart unless-stopped <container name or ID>
+
+To check the new container is running:
+======================================
+docker ps
+
+Open shell in container:
+========================
+docker exec -it <container ID> bash
+
+Commit to image from container:
+===============================
+docker commit cont_id image
+
+Ex:docker commit 02ff9c2f7e5d stubworking
+
+Start container:
+================
+docker start container_name
+Ex: docker start stub2
+
+Reconnect to a container:
+=========================
+docker run -it my_image /bin/bash
+
+Tag the image you created in order to upload it to gcr.io:
+==========================================================
+docker tag <docker image> gcr.io/<project-name>/<new-iamge-name:v1>
+docker tag 
+Ex: docker tag gcr.io/bf-diverse-nonprod/tomcatbase:v1 gcr.io/bf-diverse-nonprod/bf-tomcat-base:v1
+
+Push the image to gcr.io:
+=========================
+docker push gcr.io/bf-diverse-nonprod/<future-image-name:v1>
+
+Ex:
+docker push gcr.io/bf-diverse-nonprod/bf-tomcat-base
+
